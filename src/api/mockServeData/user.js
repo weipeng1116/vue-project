@@ -6,13 +6,16 @@ function param2Obj(url) {
     if (!search) {
         return {}
     }
+    console.log(search)
+    const str =  '{"' +
+    decodeURIComponent(search)
+        .replace(/"/g, '\\"')
+        .replace(/&/g, '","')
+        .replace(/=/g, '":"') +
+    '"}';
+    console.log(str)
     return JSON.parse(
-        '{"' +
-        decodeURIComponent(search)
-            .replace(/"/g, '\\"')
-            .replace(/&/g, '",')
-            .replace(/=/g, '":') +
-        '"}'
+       str
     )
 }
 
@@ -24,7 +27,7 @@ for (let i = 0; i < count; i++) {
         Mock.mock({
             id: Mock.Random.guid(),
             name: Mock.Random.cname(),
-            addr: Mock.mock('@county(true'),
+            addr: Mock.mock('@county'),
             'age|18-60': 1,
             birth: Mock.Random.date(),
             sex: Mock.Random.integer(0, 1)
@@ -40,6 +43,7 @@ export default {
     * @return {{code:number,count:number,data: *[]}}  
      */
     getUserList: config => {
+        console.log(config,'config')
         const { name, page = 1, limit = 20 } = param2Obj(config.url)
         console.log('name:' + name, 'page:' + page, '分页大小limit:' + limit)
         const mockList = List.filter(user => {
