@@ -34,11 +34,20 @@
         +新增
       </el-button>
       <!-- form的搜索区域 -->
+      <el-form :inline="true" :model="userForm">
+        <el-form-item>
+          <el-input placeholder="请输入名称" v-model="userForm.name"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+      </el-form>
     </div>
     <div class="common-table">
       <template>
         <el-table 
-            :max-height="350"
+        stripe
+            :max-height="320"
             :data="tableData"
             style="width: 100%; ">
             <el-table-column 
@@ -103,6 +112,9 @@ export default {
       pageData: {
         page: 1,
         limit: 10,
+      },
+      userForm: {
+        name:''
       }
     };
   },
@@ -176,7 +188,7 @@ export default {
     //获取列表的数据
     getList() {
       //获取列表的数据
-      getUser({ params: this.pageData }).then(({ data }) => {
+      getUser({ params:{...this.userForm,...this.pageData}}).then(({ data }) => {
         console.log(data);
         this.tableData = data.list;
         this.total = data.count || 0
@@ -187,6 +199,10 @@ export default {
       // console.log(val,'val')
       this.pageData.page = val
       this.getList()
+    },
+    //列表的查询
+    onSubmit() {
+      this.getList()
     }
   },
   mounted() {
@@ -196,6 +212,11 @@ export default {
 </script>
 <style lang="less" scoped> 
 .manage {
+  .manage-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   //  height: 80%;
    .common-table {
      position: relative;
