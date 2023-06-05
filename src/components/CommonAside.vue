@@ -28,7 +28,7 @@
   width: 200px;
 }
 .el-menu{
-  height: 150vh;
+  height: 100vh;
   h3 {
     color: #fff;
     text-align: center;

@@ -38,8 +38,9 @@
     <div class="common-table">
       <template>
         <el-table 
+            :max-height="350"
             :data="tableData"
-            style="width: 100%; height:80% ">
+            style="width: 100%; ">
             <el-table-column 
               prop="name" 
               label="姓名">   
