@@ -106,7 +106,7 @@ export default {
     mounted() {
         getData().then(({ data }) => {
             const { tableData } = data.data
-            console.log(data.data)
+            // console.log(data.data)
             this.tableData = tableData
 
             //基于准备好的dom，初始化echarts实例
@@ -130,7 +130,7 @@ export default {
                     type: 'line'
                 })
             })
-            console.log(echarts1Options)
+            // console.log(echarts1Options)
             //使用配置显示图表
             echarts1.setOption(echarts1Options)
 

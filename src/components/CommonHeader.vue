@@ -5,19 +5,19 @@
             <el-button style="margin-right:20px" @click="handMenu" icon="el-icon-menu" size="mini"></el-button>
             <!-- 面包屑 -->
 
-            <el-breadcrumb separator="/">
+            <el-breadcrumb >
                 <el-breadcrumb-item v-for="item in tags" :key="item.path"
                     :to="{ path: item.path }">{{ item.label }}</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="r-content">
-            <el-dropdown>
+            <el-dropdown @command="handleClick">
                 <span class="el-dropdown-link">
                     <img class="user" src="../assets/images/user.jpg" alt="">
                 </span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>个人中心</el-dropdown-item>
-                    <el-dropdown-item>退出</el-dropdown-item>
+                    <el-dropdown-item command="cancel">退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -25,6 +25,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import Cookie from 'js-cookie'
 export default {
     data() {
         return {}
@@ -32,6 +33,17 @@ export default {
     methods: {
         handMenu() {
             this.$store.commit('collapseMenu')
+        },
+        handleClick(command) {
+            if(command === 'cancel') {
+                // console.log('登出')
+            //清除cookie中的token
+            Cookie.remove('token')
+            //清除cookie中的menu
+            Cookie.remove('menu')
+            //跳转到登陆页面
+            this.$router.push('/login')
+            }
         }
     },
     computed: {
@@ -40,7 +52,7 @@ export default {
         })
     },
     mounted() {
-        console.log(this.tags, 'tags')
+        // console.log(this.tags, 'tags')
     }
 }
 </script>
